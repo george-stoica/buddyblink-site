@@ -1,0 +1,5 @@
+# BuddyBlink - https://buddyblink.app
+User-agent: *
+Allow: /
+
+Sitemap: https://buddyblink.app/sitemap.xml

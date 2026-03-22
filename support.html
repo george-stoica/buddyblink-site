@@ -3,7 +3,23 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title data-i18n="page.support.title">Support — BuddyBlink</title>
+<title data-i18n="page.support.title">Support & FAQ — BuddyBlink | Help Center</title>
+<meta name="description" content="Get help with BuddyBlink. Find answers to frequently asked questions about check-ins, emergency contacts, Telegram setup, pricing plans, and account management."/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://buddyblink.app/support.html"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://buddyblink.app/support.html"/>
+<meta property="og:title" content="Support & FAQ — BuddyBlink"/>
+<meta property="og:description" content="Get help with BuddyBlink. FAQ about check-ins, contacts, Telegram setup, pricing, and account management."/>
+<meta property="og:site_name" content="BuddyBlink"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Support & FAQ — BuddyBlink"/>
+<meta name="twitter:description" content="Get help with BuddyBlink. FAQ about check-ins, contacts, Telegram setup, pricing, and account management."/>
+
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -29,6 +45,88 @@
             },
         },
     }
+</script>
+
+<!-- Structured Data: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is BuddyBlink?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BuddyBlink is a check-in app. You set up a schedule (e.g., check in once a day), and if you miss a check-in, BuddyBlink automatically notifies your designated contacts via Telegram or email."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check in?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When it's time to check in, you'll receive a push notification on your phone. Simply tap the 'I'm Okay' button in the app to acknowledge your check-in. That's it — one tap."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I miss a check-in?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you miss the number of check-ins you've configured, BuddyBlink automatically sends your message to the contacts assigned to that schedule, through the channels you've set up (Telegram or email)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's included in the free plan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The free plan includes up to 3 check-in schedules, up to 3 contacts, check-in intervals from every 2 hours, Telegram and email notifications (up to 10 emails per month), and custom safety messages. No credit card required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does Premium include?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Premium unlocks up to 50 check-in schedules, 50 contacts, check-in intervals from every 1 minute, Telegram and email notifications, and unlimited email notifications."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I connect a contact via Telegram?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "After adding a contact, tap 'Link Telegram' next to that contact. A unique link will be generated — send it to your contact. When they open it and start the BuddyBlink Telegram bot, their Telegram account is automatically linked. Links expire after 72 hours for security."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I delete my account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Go to Settings > Delete Account in the app. This permanently deletes all your data — including contacts, schedules, check-in history, and notification logs — within 30 days. This action cannot be undone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is BuddyBlink available on iOS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BuddyBlink is currently available on Android via Google Play. iOS support is coming soon."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is BuddyBlink an emergency service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. BuddyBlink is a best-effort notification tool — not a guaranteed emergency response service. In a life-threatening emergency, always contact emergency services (911, 112, etc.) directly."
+      }
+    }
+  ]
+}
 </script>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
