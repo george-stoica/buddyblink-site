@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BuddyBlink — Peace of mind, without a word</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#005f7e",
+                    "primary-dark": "#004a63",
+                    "accent": "#009688",
+                    "background-light": "#f8f9fa",
+                    "background-dark": "#101922",
+                    "card-light": "#ffffff",
+                    "card-dark": "#1a2632",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"],
+                },
+                borderRadius: {
+                    "DEFAULT": "0.5rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "2xl": "2rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style type="text/tailwindcss">
+    @layer utilities {
+        .glass-card {
+            @apply bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-slate-200 dark:border-slate-700;
+        }
+        .teal-gradient {
+            background: linear-gradient(135deg, #005f7e 0%, #004a63 100%);
+        }
+    }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<div class="flex-shrink-0 flex items-center gap-3">
+<div class="size-10 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<rect fill="currentColor" height="40" rx="12" width="40" x="4" y="4"></rect>
+<path d="M24 14C20 14 17 17.5 17 21.5C17 28 24 35 24 35C24 35 31 28 31 21.5C31 17.5 28 14 24 14Z" fill="white" opacity="0.9"/>
+<path d="M21 22L23 24L27 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">BuddyBlink</span>
+</div>
+<nav class="hidden md:flex gap-10">
+<a data-i18n="nav.features" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#features">Features</a>
+<a data-i18n="nav.howit" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#how-it-works">How it works</a>
+<a data-i18n="nav.pricing" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#pricing">Pricing</a>
+<a data-i18n="nav.download" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#download">Download</a>
+<div class="flex items-center gap-1 border-l border-slate-200 dark:border-slate-700 pl-6 ml-2">
+<button data-lang="en" class="text-xs font-medium text-slate-500 hover:text-primary px-1.5 py-1 rounded transition-colors">EN</button>
+<button data-lang="ja" class="text-xs font-medium text-slate-500 hover:text-primary px-1.5 py-1 rounded transition-colors">JA</button>
+<button data-lang="ko" class="text-xs font-medium text-slate-500 hover:text-primary px-1.5 py-1 rounded transition-colors">KO</button>
+<button data-lang="zh-TW" class="text-xs font-medium text-slate-500 hover:text-primary px-1.5 py-1 rounded transition-colors">繁體</button>
+<button data-lang="zh-CN" class="text-xs font-medium text-slate-500 hover:text-primary px-1.5 py-1 rounded transition-colors">简体</button>
+</div>
+</nav>
+<div class="flex md:hidden items-center gap-1">
+<button data-lang="en" class="text-xs font-medium text-slate-500 hover:text-primary px-1 py-1 rounded transition-colors">EN</button>
+<button data-lang="ja" class="text-xs font-medium text-slate-500 hover:text-primary px-1 py-1 rounded transition-colors">JA</button>
+<button data-lang="ko" class="text-xs font-medium text-slate-500 hover:text-primary px-1 py-1 rounded transition-colors">KO</button>
+<button data-lang="zh-TW" class="text-xs font-medium text-slate-500 hover:text-primary px-1 py-1 rounded transition-colors">繁</button>
+<button data-lang="zh-CN" class="text-xs font-medium text-slate-500 hover:text-primary px-1 py-1 rounded transition-colors">简</button>
+</div>
+<div class="flex items-center gap-4">
+<a class="bg-primary hover:bg-primary-dark text-white text-sm font-semibold py-3 px-6 rounded-full transition-all shadow-lg shadow-primary/20" href="#signup">
+    <span data-i18n="nav.cta">Get Notified</span>
+</a>
+</div>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+
+<!-- Hero Section -->
+<section class="relative pt-12 pb-24 lg:pt-28 lg:pb-32 overflow-hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+<div class="flex flex-col gap-8 text-center lg:text-left order-2 lg:order-1">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 w-fit mx-auto lg:mx-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">shield</span>
+<span data-i18n="hero.badge" class="text-xs font-bold uppercase tracking-wide">Check-In App</span>
+</div>
+<h1 data-i18n="hero.headline" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+    Peace of mind, <span class="text-primary">without a word</span>
+</h1>
+<p data-i18n="hero.subtext" class="text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+    A quiet check-in system that reassures the people close to you. Set a simple routine — if you ever miss one, the right people are gently notified.
+</p>
+<div class="flex flex-col sm:flex-row gap-4 mt-2 justify-center lg:justify-start">
+<a href="#signup" class="bg-primary hover:bg-primary-dark text-white text-lg font-semibold py-4 px-8 rounded-xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-2">
+<span data-i18n="hero.cta.primary">Get Notified</span>
+</a>
+<a href="#how-it-works" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white text-lg font-semibold py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined">play_circle</span>
+<span data-i18n="hero.cta.secondary">See How It Works</span>
+</a>
+</div>
+</div>
+<div class="relative mx-auto w-full max-w-lg lg:max-w-none order-1 lg:order-2 perspective-1000">
+<div class="absolute -top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-50"></div>
+<div class="relative z-10 flex flex-col gap-6">
+<div class="bg-primary text-white rounded-[2rem] p-8 shadow-2xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+<div class="flex items-start justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-2xl">timer</span>
+</div>
+<span class="font-medium text-white/90">Next Check-in</span>
+</div>
+<span class="px-4 py-1.5 bg-white/20 rounded-full text-sm font-bold backdrop-blur-sm tracking-wide">ACTIVE</span>
+</div>
+<div class="text-center mb-8">
+<h2 class="text-7xl font-bold mb-2">2h 45m</h2>
+<p class="text-white/70 text-lg">Until your next scheduled check-in</p>
+</div>
+<button class="w-full bg-white text-primary font-bold py-4 rounded-xl hover:bg-white/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+I'M OKAY
+</button>
+</div>
+<div class="grid grid-cols-2 gap-6 transform translate-y-[-20px] lg:translate-x-12">
+<div class="bg-white dark:bg-card-dark p-6 rounded-[1.5rem] shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col items-start gap-4">
+<div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300">schedule</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">3 Schedules</h3>
+<p class="text-sm text-slate-500">All active</p>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark p-6 rounded-[1.5rem] shadow-lg border border-slate-100 dark:border-slate-700 flex flex-col items-start gap-4">
+<div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300">group</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Contacts</h3>
+<p class="text-sm text-slate-500">3 Contacts</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-slate-50 dark:bg-slate-800/30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<h2 data-i18n="features.heading" class="text-3xl font-bold text-slate-900 dark:text-white mb-4">How It Helps</h2>
+<p data-i18n="features.subtext" class="text-lg text-slate-600 dark:text-slate-400">A simple system that keeps the people close to you reassured — without getting in your way.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">notifications_active</span>
+</div>
+<h3 data-i18n="features.channels.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Multiple Channels</h3>
+<p data-i18n="features.channels.text" class="text-slate-600 dark:text-slate-400">Notifications reach your contacts through Telegram and email — so nothing gets overlooked.</p>
+</div>
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">tune</span>
+</div>
+<h3 data-i18n="features.schedules.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Flexible Schedules</h3>
+<p data-i18n="features.schedules.text" class="text-slate-600 dark:text-slate-400">Choose how often you check in and how many missed check-ins should lead to a notification. Set it once and forget about it.</p>
+</div>
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="size-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-3xl">smartphone</span>
+</div>
+<h3 data-i18n="features.checkin.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">One-Tap Check-In</h3>
+<p data-i18n="features.checkin.text" class="text-slate-600 dark:text-slate-400">When it's time, a notification appears on your phone. One tap confirms you're fine. That's all.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- When It Matters Section -->
+<section class="py-24">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<h2 data-i18n="scenarios.heading" class="text-3xl font-bold text-slate-900 dark:text-white mb-4">When It Matters</h2>
+<p data-i18n="scenarios.subtext" class="text-lg text-slate-600 dark:text-slate-400">BuddyBlink fits quietly into different lives. No matter the reason, it keeps the people who care about you reassured.</p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+<div class="bg-white dark:bg-card-dark rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all">
+<div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-2xl">flight</span>
+</div>
+<h3 data-i18n="scenarios.family.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Far from family</h3>
+<p data-i18n="scenarios.family.text" class="text-slate-600 dark:text-slate-400 leading-relaxed">You moved to a new city — or a new country. Your family can't check on you the way they used to. A daily check-in closes that distance without a phone call.</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all">
+<div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-2xl">home</span>
+</div>
+<h3 data-i18n="scenarios.solo.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Living on your own</h3>
+<p data-i18n="scenarios.solo.text" class="text-slate-600 dark:text-slate-400 leading-relaxed">Most days, everything is fine. BuddyBlink is for the rare day it isn't — a quiet signal that reaches the right people without you having to ask.</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all">
+<div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</div>
+<h3 data-i18n="scenarios.parent.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Looking after a parent</h3>
+<p data-i18n="scenarios.parent.text" class="text-slate-600 dark:text-slate-400 leading-relaxed">Your parent lives independently and that's how they want it. A simple check-in routine gives you both reassurance without intrusion.</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/30 transition-all">
+<div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-2xl">luggage</span>
+</div>
+<h3 data-i18n="scenarios.travel.title" class="text-xl font-bold text-slate-900 dark:text-white mb-3">Travelling alone</h3>
+<p data-i18n="scenarios.travel.text" class="text-slate-600 dark:text-slate-400 leading-relaxed">Whether it's a weekend trip or a longer journey, one tap a day lets someone know you're doing well.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 opacity-30" style="background-image: radial-gradient(#005f7e 1px, transparent 1px); background-size: 32px 32px;"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div>
+<div class="inline-flex items-center gap-2 mb-6 text-accent">
+<span class="material-symbols-outlined">security_update_warning</span>
+<span data-i18n="howit.label" class="font-bold uppercase tracking-wider text-sm">HOW IT WORKS</span>
+</div>
+<h2 data-i18n="howit.heading" class="text-4xl lg:text-5xl font-bold mb-6">How It Works</h2>
+<p data-i18n="howit.subtext" class="text-xl text-slate-300 mb-8 leading-relaxed">
+    Set it up once. BuddyBlink takes care of the rest quietly in the background.
+</p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="mt-1 flex-shrink-0 size-8 rounded-full bg-primary flex items-center justify-center">
+<span class="text-white font-bold">1</span>
+</div>
+<div>
+<h4 data-i18n="howit.step1.title" class="text-lg font-bold mb-1">Create a schedule</h4>
+<p data-i18n="howit.step1.text" class="text-slate-400">Choose how often you'd like to check in — once a day, every few hours, whatever suits your routine.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="mt-1 flex-shrink-0 size-8 rounded-full bg-primary flex items-center justify-center">
+<span class="text-white font-bold">2</span>
+</div>
+<div>
+<h4 data-i18n="howit.step2.title" class="text-lg font-bold mb-1">Add your contacts</h4>
+<p data-i18n="howit.step2.text" class="text-slate-400">Choose who should be notified and how — via Telegram or email. They don't need to install anything.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="mt-1 flex-shrink-0 size-8 rounded-full bg-primary flex items-center justify-center">
+<span class="text-white font-bold">3</span>
+</div>
+<div>
+<h4 data-i18n="howit.step3.title" class="text-lg font-bold mb-1">That's it</h4>
+<p data-i18n="howit.step3.text" class="text-slate-400">If you miss a check-in, BuddyBlink sends your contacts a message on your behalf. If you don't miss one, nothing happens. Simple.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative mx-auto w-full max-w-md">
+<div class="bg-white text-slate-900 rounded-[2rem] p-6 shadow-2xl border-4 border-slate-800">
+<div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+<h3 class="font-bold text-xl">Schedule Settings</h3>
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</div>
+<div class="space-y-1 bg-slate-50 rounded-xl p-4 mb-6">
+<div class="flex justify-between py-2 border-b border-slate-200">
+<span class="text-slate-500 font-medium">Check-in interval</span>
+<span class="font-bold">Every 4 hours</span>
+</div>
+<div class="flex justify-between py-2 border-b border-slate-200">
+<span class="text-slate-500 font-medium">Alert after</span>
+<span class="font-bold text-red-600">2 missed check-ins</span>
+</div>
+<div class="flex justify-between py-2 border-b border-slate-200">
+<span class="text-slate-500 font-medium">Grace period</span>
+<span class="font-bold">2 minutes</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-slate-500 font-medium">Contacts</span>
+<span class="font-bold">3 assigned</span>
+</div>
+</div>
+<div class="mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">chat_bubble</span>
+<h4 class="font-bold text-sm">Emergency message</h4>
+</div>
+<div class="bg-slate-100 p-4 rounded-xl border border-slate-200 text-sm leading-relaxed text-slate-700">
+    This is an automated safety message. I have not checked in as scheduled. Please verify my safety. Thank you.
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Privacy Section -->
+<section class="py-20 bg-slate-50 dark:bg-slate-800/30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-6">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span data-i18n="privacy.badge">Privacy First</span>
+</div>
+<h2 data-i18n="privacy.heading" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">Your Data Stays Yours</h2>
+<p data-i18n="privacy.subtext" class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+    BuddyBlink exists for one purpose — to keep your contacts informed when it matters. Your data is never used for anything else.
+</p>
+<div class="space-y-5">
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<div>
+<h4 data-i18n="privacy.gdpr.title" class="font-bold text-slate-900 dark:text-white mb-1">GDPR Compliant</h4>
+<p data-i18n="privacy.gdpr.text" class="text-slate-600 dark:text-slate-400 text-sm">We follow European data protection standards. You can access, export, or delete your data at any time.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">block</span>
+</div>
+<div>
+<h4 data-i18n="privacy.marketing.title" class="font-bold text-slate-900 dark:text-white mb-1">Never used for marketing</h4>
+<p data-i18n="privacy.marketing.text" class="text-slate-600 dark:text-slate-400 text-sm">Your information is never shared with third parties or used for advertising.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 size-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">target</span>
+</div>
+<div>
+<h4 data-i18n="privacy.purpose.title" class="font-bold text-slate-900 dark:text-white mb-1">Purpose-Limited</h4>
+<p data-i18n="privacy.purpose.text" class="text-slate-600 dark:text-slate-400 text-sm">Data is collected only to deliver check-in reminders and notifications. Nothing more.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm text-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block">shield</span>
+<h4 data-i18n="privacy.card.gdpr.title" class="font-bold text-slate-900 dark:text-white mb-2">GDPR Compliant</h4>
+<p data-i18n="privacy.card.gdpr.text" class="text-sm text-slate-500 dark:text-slate-400">EU data protection standards</p>
+</div>
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm text-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block">visibility_off</span>
+<h4 data-i18n="privacy.card.notracking.title" class="font-bold text-slate-900 dark:text-white mb-2">No Tracking</h4>
+<p data-i18n="privacy.card.notracking.text" class="text-sm text-slate-500 dark:text-slate-400">Zero marketing or ad profiling</p>
+</div>
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm text-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block">delete</span>
+<h4 data-i18n="privacy.card.erasure.title" class="font-bold text-slate-900 dark:text-white mb-2">Right to Erasure</h4>
+<p data-i18n="privacy.card.erasure.text" class="text-sm text-slate-500 dark:text-slate-400">Delete your account and all data anytime</p>
+</div>
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm text-center">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block">manage_accounts</span>
+<h4 data-i18n="privacy.card.control.title" class="font-bold text-slate-900 dark:text-white mb-2">You're in Control</h4>
+<p data-i18n="privacy.card.control.text" class="text-sm text-slate-500 dark:text-slate-400">Access and edit your data at any time</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-24 bg-background-light dark:bg-background-dark">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16">
+<span data-i18n="pricing.label" class="text-primary font-bold tracking-wider uppercase text-sm">Pricing</span>
+<h2 data-i18n="pricing.heading" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mt-2">Choose Your Plan</h2>
+</div>
+<div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+<!-- Free Tier -->
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col">
+<div class="mb-6">
+<h3 data-i18n="pricing.free.name" class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Free</h3>
+<p data-i18n="pricing.free.tagline" class="text-slate-500 dark:text-slate-400">Everything you need to get started</p>
+</div>
+<div class="mb-8">
+<span class="text-5xl font-bold text-slate-900 dark:text-white">$0</span>
+<span data-i18n="pricing.free.period" class="text-slate-500">/month</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature1">Up to 3 check-in schedules</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature2">Up to 3 contacts</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature3">Check-in intervals from every 2 hours</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature4">1–3 missed check-in threshold</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature5">Telegram &amp; email notifications</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature6">10 emails per month</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.free.feature7">Custom safety messages</span>
+</li>
+</ul>
+<a href="#signup" class="w-full bg-white dark:bg-slate-800 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 rounded-xl transition-all text-center block">
+    <span data-i18n="pricing.free.cta">Get Started Free</span>
+</a>
+</div>
+<!-- Premium Tier -->
+<div class="bg-white dark:bg-card-dark p-8 rounded-2xl shadow-lg border-2 border-primary flex flex-col relative">
+<div class="mb-6">
+<h3 data-i18n="pricing.premium.name" class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Premium</h3>
+<p data-i18n="pricing.premium.tagline" class="text-slate-500 dark:text-slate-400">More schedules, more contacts, shorter intervals</p>
+</div>
+<div class="mb-8">
+<span class="text-5xl font-bold text-slate-900 dark:text-white">$3.99</span>
+<span data-i18n="pricing.premium.period" class="text-slate-500">/month</span>
+</div>
+<ul class="space-y-4 mb-8 flex-grow">
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature1">Up to 50 check-in schedules</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature2">Up to 50 contacts</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature3">Check-in intervals from every 1 minute</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature4">Missed check-in threshold 1–100</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature5">Telegram &amp; email notifications</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span data-i18n="pricing.premium.feature6">Unlimited email notifications</span>
+</li>
+</ul>
+<a href="#signup" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 text-center block">
+    <span data-i18n="pricing.premium.cta">Upgrade to Premium</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Email Signup Section -->
+<section id="signup" class="py-24 bg-background-light dark:bg-background-dark">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-8 sm:p-12 text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-6">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span data-i18n="signup.badge">Early Access</span>
+</div>
+<h2 data-i18n="signup.heading" class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Be the First to Know</h2>
+<p data-i18n="signup.subtext" class="text-lg text-slate-600 dark:text-slate-400 mb-8">BuddyBlink is launching soon. Leave your email and we'll let you know when it's ready.</p>
+<form id="signup-form" class="max-w-md mx-auto">
+<!-- Honeypot field — hidden from humans, bots fill it -->
+<input type="text" name="website" id="honeypot" style="position:absolute;left:-9999px;top:-9999px;" tabindex="-1" autocomplete="off">
+<div class="flex gap-3">
+<input data-i18n-placeholder="signup.placeholder" type="email" id="signup-email" required placeholder="Your email address"
+  class="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+<button type="submit" id="signup-button"
+  class="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-primary/20 whitespace-nowrap">
+<span data-i18n="signup.button">Notify Me</span>
+</button>
+</div>
+<div id="signup-message" class="mt-4 text-sm hidden"></div>
+</form>
+<p data-i18n="signup.note" class="mt-6 text-xs text-slate-400">No spam. One email when we launch, and that's it.</p>
+</div>
+</div>
+</section>
+
+<!-- Download Section -->
+<section id="download" class="py-24 bg-slate-50 dark:bg-slate-800/30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-6">
+<span class="material-symbols-outlined text-sm">download</span>
+<span data-i18n="download.label">Download</span>
+</div>
+<h2 data-i18n="download.heading" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">Download</h2>
+<p data-i18n="download.subtext" class="text-lg text-slate-600 dark:text-slate-400 mb-12 leading-relaxed">
+    Available soon on Android and iOS.
+</p>
+<div class="flex flex-col sm:flex-row justify-center gap-6">
+<!-- Apple App Store Badge (Coming Soon) -->
+<div class="inline-flex items-center justify-center gap-4 bg-slate-700 text-slate-400 px-8 py-4 rounded-2xl shadow-lg cursor-default relative">
+<svg class="w-10 h-10 flex-shrink-0" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+</svg>
+<div class="text-left">
+<div data-i18n="download.comingsoon" class="text-xs text-slate-400">Coming Soon on</div>
+<div class="text-xl font-bold -mt-0.5 text-slate-300">App Store</div>
+</div>
+</div>
+<!-- Google Play Store Badge (Coming Soon) -->
+<div class="inline-flex items-center justify-center gap-4 bg-slate-700 text-slate-400 px-8 py-4 rounded-2xl shadow-lg cursor-default relative">
+<svg class="w-10 h-10 flex-shrink-0" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+</svg>
+<div class="text-left">
+<div data-i18n="download.comingsoon" class="text-xs text-slate-400">Coming Soon on</div>
+<div class="text-xl font-bold -mt-0.5 text-slate-300">Google Play</div>
+</div>
+</div>
+</div>
+<p data-i18n="download.free.note" class="mt-8 text-sm text-slate-500 dark:text-slate-400">Free plan includes up to 3 schedules, 3 contacts, Telegram &amp; email notifications, and 10 emails per month.</p>
+</div>
+</div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24 bg-primary text-white text-center relative overflow-hidden">
+<div class="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+<div class="max-w-4xl mx-auto px-4 relative z-10">
+<h2 data-i18n="cta.heading" class="text-4xl sm:text-5xl font-bold mb-6 tracking-tight">A small habit, a big difference</h2>
+<p data-i18n="cta.subtext" class="text-xl opacity-90 mb-12 max-w-2xl mx-auto leading-relaxed">Set up your first check-in in minutes. Free to start, no credit card needed.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-5">
+<a href="#signup" class="bg-white text-primary hover:bg-slate-50 text-lg font-bold py-4 px-10 rounded-full shadow-xl transition-transform hover:-translate-y-1">
+    <span data-i18n="cta.primary">Get Notified</span>
+</a>
+<a href="#pricing" class="bg-primary-dark/50 border border-white/30 hover:bg-primary-dark text-white text-lg font-bold py-4 px-10 rounded-full transition-colors backdrop-blur-sm">
+    <span data-i18n="cta.secondary">View Pricing</span>
+</a>
+</div>
+<p data-i18n="cta.free.note" class="mt-8 text-sm opacity-70">Free plan includes up to 3 schedules, 3 contacts, and 10 emails per month.</p>
+</div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-white dark:bg-[#0b1219] border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+<div class="col-span-2 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<rect fill="currentColor" height="40" rx="12" width="40" x="4" y="4"></rect>
+<path d="M24 14C20 14 17 17.5 17 21.5C17 28 24 35 24 35C24 35 31 28 31 21.5C31 17.5 28 14 24 14Z" fill="white" opacity="0.9"/>
+<path d="M21 22L23 24L27 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+</div>
+<span class="text-xl font-bold text-slate-900 dark:text-white">BuddyBlink</span>
+</div>
+<p data-i18n="footer.tagline" class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed pr-4">
+    A quiet check-in system that reassures the people close to you.
+</p>
+</div>
+<div>
+<h4 data-i18n="footer.product.heading" class="font-bold text-slate-900 dark:text-white mb-6">Product</h4>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li><a data-i18n="footer.product.features" class="hover:text-primary transition-colors" href="#features">Features</a></li>
+<li><a data-i18n="footer.product.pricing" class="hover:text-primary transition-colors" href="#pricing">Pricing</a></li>
+<li><a data-i18n="footer.product.howit" class="hover:text-primary transition-colors" href="#how-it-works">How it works</a></li>
+<li><a data-i18n="footer.product.download" class="hover:text-primary transition-colors" href="#download">Download</a></li>
+</ul>
+</div>
+<div>
+<h4 data-i18n="footer.support.heading" class="font-bold text-slate-900 dark:text-white mb-6">Support</h4>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li><a data-i18n="footer.support.contact" class="hover:text-primary transition-colors" href="support.html">Contact &amp; Support</a></li>
+<li><a data-i18n="footer.support.privacy" class="hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a></li>
+<li><a data-i18n="footer.support.terms" class="hover:text-primary transition-colors" href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 data-i18n="footer.channels.heading" class="font-bold text-slate-900 dark:text-white mb-6">Notification Channels</h4>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base">send</span>
+Telegram
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base">mail</span>
+Email
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-400">&copy; 2026 BuddyBlink. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+
+<script src="i18n.js"></script>
+<script>
+(function() {
+  const supabase = window.supabase.createClient(
+    'YOUR_SUPABASE_URL',
+    'YOUR_SUPABASE_ANON_KEY'
+  );
+
+  const form = document.getElementById('signup-form');
+  const emailInput = document.getElementById('signup-email');
+  const honeypot = document.getElementById('honeypot');
+  const button = document.getElementById('signup-button');
+  const buttonLabel = button.querySelector('[data-i18n="signup.button"]');
+  const message = document.getElementById('signup-message');
+
+  function showMessage(text, isError) {
+    message.textContent = text;
+    message.className = 'mt-4 text-sm ' + (isError
+      ? 'text-red-600 dark:text-red-400'
+      : 'text-green-600 dark:text-green-400');
+    message.classList.remove('hidden');
+  }
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Honeypot check
+    if (honeypot.value) return;
+
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    button.disabled = true;
+    if (buttonLabel) buttonLabel.textContent = '...';
+
+    const { error } = await supabase
+      .from('landing_page_signups')
+      .insert({
+        email: email,
+        locale: (navigator.language || '').slice(0, 5)
+      });
+
+    if (error) {
+      if (error.code === '23505') {
+        showMessage(window.bbI18n('signup.duplicate'), false);
+      } else {
+        showMessage(window.bbI18n('signup.error'), true);
+      }
+    } else {
+      showMessage(window.bbI18n('signup.success'), false);
+      emailInput.value = '';
+    }
+
+    button.disabled = false;
+    if (buttonLabel) buttonLabel.textContent = window.bbI18n('signup.button');
+  });
+})();
+</script>
+</body>
+</html>

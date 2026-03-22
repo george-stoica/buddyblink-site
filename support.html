@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-i18n="page.support.title">Support — BuddyBlink</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#005f7e",
+                    "primary-dark": "#004a63",
+                    "accent": "#009688",
+                    "background-light": "#f8f9fa",
+                    "background-dark": "#101922",
+                    "card-light": "#ffffff",
+                    "card-dark": "#1a2632",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"],
+                },
+            },
+        },
+    }
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<a href="index.html" class="flex-shrink-0 flex items-center gap-3">
+<div class="size-10 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<rect fill="currentColor" height="40" rx="12" width="40" x="4" y="4"></rect>
+<path d="M24 14C20 14 17 17.5 17 21.5C17 28 24 35 24 35C24 35 31 28 31 21.5C31 17.5 28 14 24 14Z" fill="white" opacity="0.9"/>
+<path d="M21 22L23 24L27 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+</div>
+<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">BuddyBlink</span>
+</a>
+<nav class="hidden md:flex gap-10">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="index.html#features" data-i18n="nav.features">Features</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="index.html#pricing" data-i18n="nav.pricing">Pricing</a>
+<a class="text-sm font-medium text-primary dark:text-primary transition-colors" href="support.html" data-i18n="nav.support">Support</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="bg-primary hover:bg-primary-dark text-white text-sm font-semibold py-3 px-6 rounded-full transition-all shadow-lg shadow-primary/20" href="index.html#signup" data-i18n="nav.cta">
+    Get Notified
+</a>
+</div>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+
+<!-- Hero -->
+<section class="py-16 sm:py-24">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wide mb-6">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+<span data-i18n="page.support.hero.badge">Support</span>
+</div>
+<h1 class="text-4xl sm:text-5xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="page.support.hero.h1">How Can We Help?</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="page.support.hero.subtext">
+We're here to help you get the most out of BuddyBlink. Find answers below or reach out directly.
+</p>
+</div>
+</section>
+
+<!-- Contact Card -->
+<section class="pb-16">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="p-8 sm:p-10 bg-primary text-white">
+<h2 class="text-2xl font-bold mb-2" data-i18n="page.support.contact.heading">Contact Us</h2>
+<p class="text-white/80" data-i18n="page.support.contact.subtext">For questions, bug reports, or account help, reach out by email. We aim to respond within 24 hours.</p>
+</div>
+<div class="p-8 sm:p-10">
+<a href="mailto:support@buddyblink.app" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/30 transition-colors group">
+<div class="flex-shrink-0 size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">mail</span>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">support@buddyblink.app</p>
+<p class="text-sm text-slate-500 dark:text-slate-400" data-i18n="page.support.contact.email.desc">Email us anytime — we usually reply within one business day</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FAQ Section -->
+<section class="pb-24">
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8" data-i18n="page.support.faq.heading">Frequently Asked Questions</h2>
+
+<div class="space-y-4">
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q1">What is BuddyBlink?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a1">
+BuddyBlink is a check-in app. You set up a schedule (e.g., check in once a day), and if you miss a check-in, BuddyBlink automatically notifies your designated contacts via Telegram or email.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q2">How do I check in?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a2">
+When it's time to check in, you'll receive a push notification on your phone. Simply tap the "I'm Okay" button in the app to acknowledge your check-in. That's it — one tap.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q3">What happens if I miss a check-in?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a3">
+If you miss the number of check-ins you've configured (e.g., 1 or 2 missed), BuddyBlink automatically sends your message to the contacts assigned to that schedule, through the channels you've set up (Telegram or email).
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q4">What's included in the free plan?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a4">
+The free plan includes up to 3 check-in schedules, up to 3 contacts, check-in intervals from every 2 hours, Telegram and email notifications (up to 10 emails per month), and custom safety messages. No credit card required.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q5">What does Premium include?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a5">
+Premium unlocks up to 50 check-in schedules, 50 contacts, check-in intervals from every 1 minute, Telegram &amp; email notifications, and unlimited email notifications.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q6">How do I connect a contact via Telegram?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a6">
+After adding a contact, tap "Link Telegram" next to that contact. A unique link will be generated — send it to your contact. When they open it and start the BuddyBlink Telegram bot, their Telegram account is automatically linked. Links expire after 72 hours for security.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q7">How do I delete my account?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a7">
+Go to Settings &gt; Delete Account in the app. This permanently deletes all your data — including contacts, schedules, check-in history, and notification logs — within 30 days. This action cannot be undone.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q8">Is BuddyBlink available on iOS?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a8">
+BuddyBlink is currently available on Android via Google Play. iOS support is coming soon — stay tuned for updates.
+</div>
+</details>
+
+<details class="group bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+<summary class="flex items-center justify-between p-5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<span class="font-semibold text-slate-900 dark:text-white pr-4" data-i18n="page.support.faq.q9">Is BuddyBlink an emergency service?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-5 pb-5 text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="page.support.faq.a9">
+No. BuddyBlink is a best-effort notification tool — not a guaranteed emergency response service. It depends on internet connectivity, third-party services (Telegram, email providers), and your device being operational. In a life-threatening emergency, always contact emergency services (911, 112, etc.) directly.
+</div>
+</details>
+
+</div>
+
+</div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-white dark:bg-[#0b1219] border-t border-slate-200 dark:border-slate-800 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<rect fill="currentColor" height="40" rx="12" width="40" x="4" y="4"></rect>
+<path d="M24 14C20 14 17 17.5 17 21.5C17 28 24 35 24 35C24 35 31 28 31 21.5C31 17.5 28 14 24 14Z" fill="white" opacity="0.9"/>
+<path d="M21 22L23 24L27 20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+</div>
+<span class="text-sm font-bold text-slate-900 dark:text-white">BuddyBlink</span>
+</div>
+<div class="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="privacy.html" data-i18n="footer.link.privacy">Privacy</a>
+<a class="hover:text-primary transition-colors" href="terms.html" data-i18n="footer.link.terms">Terms</a>
+<a class="hover:text-primary transition-colors" href="support.html" data-i18n="footer.link.support">Support</a>
+</div>
+<p class="text-xs text-slate-400">&copy; 2026 BuddyBlink. All rights reserved.</p>
+</div>
+</div>
+</footer>
+
+<script src="i18n.js"></script>
+</body>
+</html>
