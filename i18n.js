@@ -1340,21 +1340,70 @@
     document.documentElement.lang = locale;
 
     // Update active state on language switcher
+    var langLabels = { 'en': 'EN', 'ja': 'JA', 'ko': 'KO', 'zh-TW': '繁體', 'zh-CN': '简体' };
     document.querySelectorAll('[data-lang]').forEach(function(btn) {
       btn.classList.toggle('text-primary', btn.getAttribute('data-lang') === locale);
       btn.classList.toggle('font-bold', btn.getAttribute('data-lang') === locale);
     });
 
+    // Update dropdown labels
+    var label = langLabels[locale] || 'EN';
+    var desktopLabel = document.getElementById('lang-dropdown-label');
+    var mobileLabel = document.getElementById('lang-dropdown-label-mobile');
+    if (desktopLabel) desktopLabel.textContent = label;
+    if (mobileLabel) mobileLabel.textContent = label;
+
+    // Close any open dropdown menus
+    var desktopMenu = document.getElementById('lang-dropdown-menu');
+    var mobileMenu = document.getElementById('lang-dropdown-menu-mobile');
+    if (desktopMenu) desktopMenu.classList.add('hidden');
+    if (mobileMenu) mobileMenu.classList.add('hidden');
+
     localStorage.setItem('buddyblink-lang', locale);
   }
 
-  // Language switcher click handler
+  // Language dropdown toggle and selection
+  function toggleDropdown(btnId, menuId) {
+    var menu = document.getElementById(menuId);
+    if (menu) {
+      menu.classList.toggle('hidden');
+      // Close the other dropdown
+      var otherId = menuId === 'lang-dropdown-menu' ? 'lang-dropdown-menu-mobile' : 'lang-dropdown-menu';
+      var other = document.getElementById(otherId);
+      if (other) other.classList.add('hidden');
+    }
+  }
+
   document.addEventListener('click', function(e) {
-    const langBtn = e.target.closest('[data-lang]');
+    // Toggle desktop dropdown
+    var desktopBtn = e.target.closest('#lang-dropdown-btn');
+    if (desktopBtn) {
+      e.preventDefault();
+      toggleDropdown('lang-dropdown-btn', 'lang-dropdown-menu');
+      return;
+    }
+
+    // Toggle mobile dropdown
+    var mobileBtn = e.target.closest('#lang-dropdown-btn-mobile');
+    if (mobileBtn) {
+      e.preventDefault();
+      toggleDropdown('lang-dropdown-btn-mobile', 'lang-dropdown-menu-mobile');
+      return;
+    }
+
+    // Language option selected
+    var langBtn = e.target.closest('[data-lang]');
     if (langBtn) {
       e.preventDefault();
       applyTranslations(langBtn.getAttribute('data-lang'));
+      return;
     }
+
+    // Click outside closes dropdowns
+    var desktopMenu = document.getElementById('lang-dropdown-menu');
+    var mobileMenu = document.getElementById('lang-dropdown-menu-mobile');
+    if (desktopMenu) desktopMenu.classList.add('hidden');
+    if (mobileMenu) mobileMenu.classList.add('hidden');
   });
 
   // Apply on load
