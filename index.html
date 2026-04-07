@@ -27,33 +27,56 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<!-- Google Analytics 4
-     IMPORTANT: Replace G-V27Q3N62QP with your real Measurement ID before going live.
-     Find it in Google Analytics → Admin → Data Streams → (your web stream) → Measurement ID.
-     GA4 is loaded only after the visitor accepts the cookie consent banner below.
+<!-- Google Analytics 4 — Consent Mode v2
+     gtag.js is loaded eagerly on every page view. Until the visitor accepts the
+     cookie banner, all consent signals default to 'denied', so GA4 sends only
+     cookieless pings (no client ID, no cookies). These pings feed GA4's
+     behavioral modelling for aggregate metrics (e.g. unique visit estimates)
+     without requiring explicit consent under ePrivacy/GDPR.
+     When the visitor clicks Accept, consent is upgraded to 'granted' for full
+     tracking. Returning visitors who previously accepted are auto-upgraded from
+     localStorage so they are never prompted again.
      Consent state is stored in localStorage under key 'bb_ga_consent'. -->
 <script>
-  window.GA_MEASUREMENT_ID = 'G-V27Q3N62QP'; // TODO: replace with real Measurement ID
+  window.GA_MEASUREMENT_ID = 'G-V27Q3N62QP';
 
-  // Initialise GA4. Called after the user grants consent.
-  window.bbLoadGA = function () {
-    if (window.__bbGaLoaded) return;
-    window.__bbGaLoaded = true;
+  // Set up dataLayer and gtag stub before the gtag/js script loads so that
+  // consent defaults are registered before any hits are sent.
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  // Default all consent signals to denied (cookieless ping mode).
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'wait_for_update': 500
+  });
+
+  gtag('js', new Date());
+  gtag('config', window.GA_MEASUREMENT_ID);
+
+  // Returning visitor: upgrade consent immediately so they get full tracking
+  // without being shown the banner again.
+  if (localStorage.getItem('bb_ga_consent') === 'granted') {
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+  }
+
+  // Inject the gtag/js loader dynamically so the URL is always derived from
+  // window.GA_MEASUREMENT_ID — single source of truth for the Measurement ID.
+  (function () {
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
     document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', window.GA_MEASUREMENT_ID);
-  };
-
-  // If the visitor already consented on a previous visit, load GA immediately.
-  if (localStorage.getItem('bb_ga_consent') === 'granted') {
-    window.bbLoadGA();
-  }
+  })();
 </script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -736,7 +759,8 @@ Email
 <!-- ============================================================
      Cookie Consent Banner
      Appears once per visitor (dismissed state in localStorage).
-     GA4 is only loaded after "Accept" is clicked.
+     GA4 loads eagerly in cookieless-ping mode (Consent Mode v2).
+     Accept upgrades to full tracking; Decline keeps it cookieless.
      ============================================================ -->
 <!-- The banner is hidden by default via the style block above; JS shows it when needed. -->
 <style>#bb-cookie-banner{display:none}</style>
@@ -780,10 +804,18 @@ Email
   document.getElementById('bb-cookie-accept').addEventListener('click', function () {
     localStorage.setItem('bb_ga_consent', 'granted');
     banner.style.display = 'none';
-    if (typeof window.bbLoadGA === 'function') window.bbLoadGA();
+    // Upgrade from cookieless-ping mode to full tracking.
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
   });
 
   document.getElementById('bb-cookie-decline').addEventListener('click', function () {
+    // 'denied' is already the default — just persist the choice so the banner
+    // doesn't reappear on the next visit.
     localStorage.setItem('bb_ga_consent', 'denied');
     banner.style.display = 'none';
   });
@@ -793,7 +825,8 @@ Email
 <!-- ============================================================
      GA4 Custom Event Tracking — index.html only
      Tracks CTA button clicks (cta_click) and signup form submission (form_submit).
-     All events are no-ops if GA4 was not loaded (consent not granted).
+     With Consent Mode v2, gtag is always defined. Pre-consent events are sent as
+     cookieless pings; post-consent events carry the full client ID and cookies.
      ============================================================ -->
 <script>
 (function () {
