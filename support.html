@@ -24,6 +24,26 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Google Analytics 4
+     IMPORTANT: Replace G-V27Q3N62QP with your real Measurement ID before going live.
+     Find it in Google Analytics → Admin → Data Streams → (your web stream) → Measurement ID.
+     Analytics only loads when the visitor has accepted cookies via the consent banner on the
+     homepage; consent is stored in localStorage under key 'bb_ga_consent'. -->
+<script>
+  window.GA_MEASUREMENT_ID = 'G-V27Q3N62QP'; // TODO: replace with real Measurement ID
+  (function () {
+    if (localStorage.getItem('bb_ga_consent') !== 'granted') return;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', window.GA_MEASUREMENT_ID);
+  })();
+</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
     tailwind.config = {

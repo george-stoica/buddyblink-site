@@ -27,6 +27,34 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Google Analytics 4
+     IMPORTANT: Replace G-V27Q3N62QP with your real Measurement ID before going live.
+     Find it in Google Analytics → Admin → Data Streams → (your web stream) → Measurement ID.
+     GA4 is loaded only after the visitor accepts the cookie consent banner below.
+     Consent state is stored in localStorage under key 'bb_ga_consent'. -->
+<script>
+  window.GA_MEASUREMENT_ID = 'G-V27Q3N62QP'; // TODO: replace with real Measurement ID
+
+  // Initialise GA4. Called after the user grants consent.
+  window.bbLoadGA = function () {
+    if (window.__bbGaLoaded) return;
+    window.__bbGaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', window.GA_MEASUREMENT_ID);
+  };
+
+  // If the visitor already consented on a previous visit, load GA immediately.
+  if (localStorage.getItem('bb_ga_consent') === 'granted') {
+    window.bbLoadGA();
+  }
+</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -704,6 +732,106 @@ Email
 </div>
 </footer>
 
+
+<!-- ============================================================
+     Cookie Consent Banner
+     Appears once per visitor (dismissed state in localStorage).
+     GA4 is only loaded after "Accept" is clicked.
+     ============================================================ -->
+<!-- The banner is hidden by default via the style block above; JS shows it when needed. -->
+<style>#bb-cookie-banner{display:none}</style>
+<div id="bb-cookie-banner"
+     role="dialog"
+     aria-live="polite"
+     aria-label="Cookie consent"
+     style="position:fixed;bottom:0;left:0;right:0;z-index:9999;
+            background:#1a2632;border-top:1px solid #2d3e4e;
+            padding:16px 24px;
+            flex-wrap:wrap;align-items:center;gap:12px;
+            font-family:Inter,sans-serif;font-size:14px;color:#cbd5e1;">
+  <span style="flex:1;min-width:220px;">
+    We use cookies to understand how visitors use BuddyBlink and to improve the experience.
+    See our <a href="privacy.html" style="color:#009688;text-decoration:underline;">Privacy Policy</a>.
+  </span>
+  <div style="display:flex;gap:8px;flex-shrink:0;">
+    <button id="bb-cookie-decline"
+            style="background:transparent;border:1px solid #4b5a6a;color:#94a3b8;
+                   padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+      Decline
+    </button>
+    <button id="bb-cookie-accept"
+            style="background:#005f7e;color:#fff;border:none;
+                   padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">
+      Accept
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var banner = document.getElementById('bb-cookie-banner');
+  var consent = localStorage.getItem('bb_ga_consent');
+
+  // Show banner only if consent has not yet been set (default is display:none via <style>)
+  if (!consent) {
+    banner.style.display = 'flex';
+  }
+
+  document.getElementById('bb-cookie-accept').addEventListener('click', function () {
+    localStorage.setItem('bb_ga_consent', 'granted');
+    banner.style.display = 'none';
+    if (typeof window.bbLoadGA === 'function') window.bbLoadGA();
+  });
+
+  document.getElementById('bb-cookie-decline').addEventListener('click', function () {
+    localStorage.setItem('bb_ga_consent', 'denied');
+    banner.style.display = 'none';
+  });
+})();
+</script>
+
+<!-- ============================================================
+     GA4 Custom Event Tracking — index.html only
+     Tracks CTA button clicks (cta_click) and signup form submission (form_submit).
+     All events are no-ops if GA4 was not loaded (consent not granted).
+     ============================================================ -->
+<script>
+(function () {
+  function sendEvent(name, params) {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', name, params);
+  }
+
+  // --- cta_click: track all primary CTA / download buttons ---
+  // Selects anchors that point to #signup, #download, or the nav CTA
+  var ctaSelectors = [
+    'a[href="#signup"]',
+    'a[href="#download"]',
+    'a[href="index.html#download"]',
+  ];
+  ctaSelectors.forEach(function (sel) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.addEventListener('click', function () {
+        // Derive a human-readable label from visible text or data-i18n attribute
+        var label = (el.textContent || '').trim().replace(/\s+/g, ' ') || el.getAttribute('href');
+        // Determine section location by closest section id
+        // (avoid shadowing window.location by using a distinct variable name)
+        var section = el.closest('section');
+        var sectionLocation = section ? (section.id || 'unknown') : 'header';
+        sendEvent('cta_click', { button_label: label, location: sectionLocation });
+      });
+    });
+  });
+
+  // --- form_submit: track the email signup form ---
+  var signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', function () {
+      sendEvent('form_submit', { form_name: 'email_signup' });
+    });
+  }
+})();
+</script>
 
 <script src="i18n.js"></script>
 <script>
