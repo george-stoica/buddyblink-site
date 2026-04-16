@@ -1,0 +1,62 @@
+# BuddyBlink
+
+> BuddyBlink is a personal safety check-in app for Android (iOS coming soon). Users configure periodic check-in schedules; if they miss a check-in, designated emergency contacts are automatically notified via Telegram or email — no action required by contacts.
+
+## Product
+
+- **Type**: Mobile application (Android, iOS coming soon)
+- **Category**: Personal safety / check-in / dead-man's switch
+- **Developer**: BuddyBlink
+- **Website**: https://buddyblink.app
+- **Support**: support@buddyblink.app
+- **Android app**: https://play.google.com/store/apps/details?id=com.buddyblink.app
+
+## How It Works
+
+1. User creates a check-in schedule (e.g., every 4 hours, once daily)
+2. User adds emergency contacts with their Telegram handle or email address
+3. At each interval, user receives a push notification and taps "I'm Okay"
+4. If the user misses the configured number of check-ins, BuddyBlink sends an alert message to all assigned contacts automatically
+5. Contacts do not need to install the app
+
+## Notification Channels
+
+- Telegram (contacts link via a bot; no app install required)
+- Email
+
+## Pricing
+
+- **Free**: 3 check-in schedules, 3 contacts, 2-hour minimum interval, 10 emails/month — no credit card required
+- **Premium**: $3.99/month — 50 schedules, 50 contacts, 1-minute minimum interval, unlimited emails
+
+## Use Cases
+
+- People living alone who want a safety net
+- Solo travelers
+- Adults monitoring elderly parents at a distance
+- People far from family who want to stay connected passively
+- Lone workers
+
+## Frequently Asked Questions
+
+**What is BuddyBlink?**
+BuddyBlink is a check-in safety app. You set a schedule, and if you miss a check-in, BuddyBlink automatically notifies your designated contacts via Telegram or email.
+
+**Is BuddyBlink free?**
+Yes. The free plan is permanently free with no credit card required. It includes 3 schedules, 3 contacts, and 10 emails per month.
+
+**Does my emergency contact need to install the app?**
+No. Contacts receive alerts via Telegram (using the BuddyBlink bot) or email. They do not need the app.
+
+**Is BuddyBlink an emergency service?**
+No. BuddyBlink is a best-effort notification tool, not a guaranteed emergency response service. In a life-threatening emergency, contact emergency services (911, 112) directly.
+
+**What platforms is BuddyBlink available on?**
+Currently Android via Google Play. iOS is coming soon.
+
+## Pages
+
+- [Home](https://buddyblink.app/)
+- [Support & FAQ](https://buddyblink.app/support.html)
+- [Privacy Policy](https://buddyblink.app/privacy.html)
+- [Terms of Service](https://buddyblink.app/terms.html)
